@@ -1,0 +1,201 @@
+// Карточки
+//@use 'variables';
+
+.card {
+  background: $card-bg;
+  border-radius: $border-radius;
+  box-shadow: $shadow-sm;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+  
+  &--elevated {
+    box-shadow: $shadow-md;
+  }
+  
+  &--interactive {
+    transition: all 0.2s ease;
+    
+    &:hover {
+      box-shadow: $shadow-lg;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// Кнопки
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $border-radius-sm;
+  font-weight: 500;
+  font-size: $font-size-base;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+  
+  &--primary {
+    background: $primary-color;
+    color: white;
+    
+    &:hover {
+      background: darken($primary-color, 10%);
+    }
+  }
+  
+  &--success {
+    background: $success-color;
+    color: white;
+    
+    &:hover {
+      background: darken($success-color, 10%);
+    }
+  }
+  
+  &--danger {
+    background: $danger-color;
+    color: white;
+    
+    &:hover {
+      background: darken($danger-color, 10%);
+    }
+  }
+  
+  &--block {
+    width: 100%;
+  }
+  
+  &--lg {
+    padding: $spacing-md $spacing-xl;
+    font-size: $font-size-lg;
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+// Формы
+.form {
+  &-group {
+    margin-bottom: $spacing-lg;
+  }
+  
+  &-label {
+    display: block;
+    margin-bottom: $spacing-sm;
+    font-weight: 500;
+    color: $text-color;
+  }
+  
+  &-input {
+    width: 100%;
+    padding: $spacing-md;
+    border: 2px solid $border-color;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-base;
+    transition: border-color 0.2s ease;
+    
+    &:focus {
+      border-color: $primary-color;
+    }
+    
+    &--error {
+      border-color: $danger-color;
+    }
+  }
+  
+  &-error {
+    color: $danger-color;
+    font-size: $font-size-sm;
+    margin-top: $spacing-xs;
+  }
+}
+
+// Списки
+.list {
+  &-item {
+    padding: $spacing-md;
+    border-bottom: 1px solid $border-color;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    &--interactive {
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      
+      &:hover {
+        background-color: lighten($bg-color, 2%);
+      }
+    }
+  }
+}
+
+// Транзакции
+.transaction {
+  &-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-md 0;
+    border-bottom: 1px solid $border-color;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+  
+  &-amount {
+    font-weight: 600;
+    
+    &--income {
+      color: $success-color;
+    }
+    
+    &--expense {
+      color: $danger-color;
+    }
+  }
+  
+  &-description {
+    flex: 1;
+    margin-right: $spacing-md;
+  }
+  
+  &-category {
+    font-size: $font-size-sm;
+    color: $text-muted;
+    margin-top: $spacing-xs;
+  }
+}
+
+// Баланс
+.balance {
+  &-card {
+    @extend .card;
+    text-align: center;
+  }
+  
+  &-amount {
+    font-size: $font-size-2xl;
+    font-weight: 700;
+    margin: $spacing-sm 0;
+    
+    &--positive {
+      color: $success-color;
+    }
+    
+    &--negative {
+      color: $danger-color;
+    }
+  }
+  
+  &-label {
+    color: $text-muted;
+    font-size: $font-size-sm;
+  }
+}

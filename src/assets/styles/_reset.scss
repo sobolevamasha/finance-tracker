@@ -1,0 +1,60 @@
+// Modern CSS reset
+//@use 'variables';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: $font-size-base;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: $font-family;
+  line-height: 1.5;
+  color: $text-color;
+  background-color: $bg-color;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Remove default button styles
+button {
+  border: none;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
+  
+  &:focus {
+    outline: none;
+  }
+  
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+// Remove input styles
+input, textarea, select {
+  font-family: inherit;
+  border: none;
+  
+  &:focus {
+    outline: none;
+  }
+}
+
+// Remove list styles
+ul, ol {
+  list-style: none;
+}
+
+// Remove link styles
+a {
+  text-decoration: none;
+  color: inherit;
+}

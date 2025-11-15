@@ -1,0 +1,59 @@
+// Базовые стили приложения
+
+//@use 'variables';
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+// Контейнер
+.container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: $spacing-md;
+  
+  @media (min-width: $tablet) {
+    max-width: 600px;
+    padding: $spacing-lg;
+  }
+}
+
+// Типографика
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: $spacing-md;
+}
+
+h1 {
+  font-size: $font-size-2xl;
+  color: $text-color;
+}
+
+h2 {
+  font-size: $font-size-xl;
+  color: $text-color;
+}
+
+h3 {
+  font-size: $font-size-lg;
+  color: $text-color;
+}
+
+p {
+  margin-bottom: $spacing-md;
+  color: $text-muted;
+}
+
+// Текстовые классы
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.text-success { color: $success-color; }
+.text-danger { color: $danger-color; }
+.text-warning { color: $warning-color; }
+.text-muted { color: $text-muted; }
