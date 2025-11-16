@@ -19,6 +19,11 @@ export default defineConfig({
   server: {
     host: 'localhost',
     port: 3001,
-    strictPort: true,
+    //strictPort: true,
+    allowedHosts: [
+    'localhost',
+    '.loca.lt',
+    'finance-tracker-vert-two.vercel.app'
+  ]
   }
 })

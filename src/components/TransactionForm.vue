@@ -79,7 +79,8 @@
 
 <script setup>
 import { ref, watch, computed } from 'vue'
-import { useTransactions } from '../stores/useTransactions'
+import { useTransactions } from '@/stores/useTransactions'
+import { useAnimationStore } from '@/stores/useAnimation'
 
 const props = defineProps({
   visible: Boolean,
@@ -89,6 +90,7 @@ const props = defineProps({
 const emit = defineEmits(['close'])
 
 const transactionStore = useTransactions()
+const animationStore = useAnimationStore()
 
 const form = ref({
   type: 'expense',
@@ -110,6 +112,65 @@ const categories = computed(() => [
   { value: 'other', label: '📦 Другое' }
 ])
 
+const submitForm = async () => {
+  console.log('🔍 form.value:', JSON.stringify(form.value, null, 2))
+  
+  const amount = form.value.type === 'income' 
+    ? +form.value.amount 
+    : -Math.abs(+form.value.amount)
+
+  const transactionData = {
+    amount,
+    category: form.value.category || 'other',
+    description: form.value.description || 'Без описания',
+    date: form.value.date
+  }
+
+  console.log('📝 Тип операции:', form.value.type)
+  console.log('📝 Сумма:', amount)
+
+  // 🔥 ЗАПУСКАЕМ АНИМАЦИЮ ДО СОХРАНЕНИЯ
+  const isIncome = form.value.type === 'income'
+  console.log('🔍 isIncome:', isIncome)
+  
+  if (isIncome) {
+    console.log('💰 ЗАПУСКАЕМ АНИМАЦИЮ ДЕНЕГ!')
+    animationStore.triggerMoneyAnimation()
+    
+    // 🔥 ЖДЕМ 2 СЕКУНДЫ чтобы увидеть анимацию
+    await new Promise(resolve => setTimeout(resolve, 2000))
+  } else {
+    console.log('📤 Это расход, анимация не запускается')
+  }
+
+  // Сохраняем транзакцию ПОСЛЕ анимации
+  saveTransaction(transactionData)
+}
+
+const saveTransaction = (transactionData) => {
+  if (props.editingTransaction) {
+    transactionStore.updateTransaction(props.editingTransaction.id, transactionData)
+  } else {
+    transactionStore.addTransaction(transactionData)
+  }
+  close()
+}
+
+const resetForm = () => {
+  form.value = {
+    type: 'expense',
+    amount: '',
+    category: '',
+    description: '',
+    date: new Date().toISOString().split('T')[0]
+  }
+}
+
+const close = () => {
+  resetForm()
+  emit('close')
+}
+
 watch(() => props.editingTransaction, (transaction) => {
   if (transaction) {
     form.value = {
@@ -123,44 +184,6 @@ watch(() => props.editingTransaction, (transaction) => {
     resetForm()
   }
 })
-
-const resetForm = () => {
-  form.value = {
-    type: 'expense',
-    amount: '',
-    category: '',
-    description: '',
-    date: new Date().toISOString().split('T')[0]
-  }
-}
-
-const submitForm = () => {
-  const amount = form.value.type === 'income' 
-    ? +form.value.amount 
-    : -Math.abs(+form.value.amount)
-
-  const transactionData = {
-    amount,
-    category: form.value.category || 'other',
-    description: form.value.description || 'Без описания',
-    date: form.value.date
-  }
-
-  if (props.editingTransaction) {
-    // Редактирование существующей транзакции
-    transactionStore.updateTransaction(props.editingTransaction.id, transactionData)
-  } else {
-    // Добавление новой транзакции
-    transactionStore.addTransaction(transactionData)
-  }
-
-  close()
-}
-
-const close = () => {
-  resetForm()
-  emit('close')
-}
 </script>
 
 <style scoped lang="scss">
